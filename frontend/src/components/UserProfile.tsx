@@ -1,28 +1,16 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Input } from "./Input"
-import { UserLogo } from "./userLogo"
+import { UserLogo } from "./UserLogo"
 import { Button } from "./Button";
 import axios from "axios";
+import { useProfile } from "../hooks/useProfile";
 
 export const UserProfile = ()=>{
     const [name,setName] = useState("");
-    const [userData,setUserData] = useState<any>({});
-
-    useEffect(()=>{
-        const fetch = async()=>{
-            const token = localStorage.getItem("token");
-            
-            const res = await axios.post("http://localhost:8080/user",{
-                token:token
-            });
-            const ans = res.data;
-            console.log("this is ",ans);
-            setUserData(ans);
-        }
-        fetch();
-    },[])
+    const {value} = useProfile();
 
     const handler = async()=>{
+        
         const token = localStorage.getItem("token");
 
         const res = await axios.post("http://localhost:8080/userupdate",{
@@ -34,12 +22,16 @@ export const UserProfile = ()=>{
         alert(ans);
 
     }
+
+    if(!value){
+        return <div className="bg-gray-800 w-full h-screen flex justify-center items-center">loading...</div>
+    }
     return(<div className="bg-gray-800 w-full h-screen flex justify-center items-center ">
         <div className=" border-2 w-180 h-auto ">
             <div className="flex items-center">
                 <div className=" hover:cursor-pointer p-5"><UserLogo classname="w-50 h-50"/></div>
                 <div className="space-y-3 rounded">
-                        <Input type="text" placeholder={userData.user?.name} onchange={(x)=>{setName(x.target.value)}}/>
+                        <Input value={value.name} type="text"  onchange={(x)=>{setName(x.target.value)}}/>
                         {/* <Input type="text" placeholder={"ahire"} onchange={(x)=>{}}/> */}
                 </div>
             </div>

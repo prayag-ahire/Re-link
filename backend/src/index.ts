@@ -5,16 +5,22 @@ import {Server} from "socket.io"
 import bcrypt from "bcryptjs"
 import jwt,{JwtPayload} from "jsonwebtoken" 
 import { PrismaClient } from "@prisma/client";
+import { socket } from "./util/ws";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 const port = 8080;
 const server = http.createServer(app);
-// const io = new Server(server);
+const io = new Server(server,{
+    cors:{
+        origin:"http://localhost:5173"
+    }
+});
+
+socket(io);
 
 const prismaClient = new PrismaClient();
-
 
 
 app.post("/login",async(req,res):Promise<any>=>{
@@ -93,6 +99,7 @@ app.post("/user",async(req,res)=>{
                 id:uid
             },
             select:{
+                id:true,
                 name:true
             }
         })
@@ -147,6 +154,7 @@ app.post("/friendlist",async(req,res)=>{
             }
         }) 
         res.json({user});
+        console.log(user);
     }catch(error){
         console.error(error);
         res.status(500).send('server error');
@@ -180,9 +188,11 @@ app.post("/addfriend",async(req,res)=>{
                 friends:{
                     connect:{id:uid}
                 }
+            },select:{
+                name:true
             }
         })
-        res.json({user1,user2})
+        res.json({user2})
     }catch(error){
         console.error(error);
         res.status(500).send('server error');

@@ -1,23 +1,14 @@
-import axios from "axios";
-import { useEffect, useState } from "react"
-import { UserLogo } from "./userLogo";
+
+import { UserLogo } from "./UserLogo";
+import { useFriendlist } from "../hooks/useFriendlist";
 
 export const FriendList = ()=>{
     
-    const [value,setValue] = useState<{name:string}[]>([]);
+    const {value} = useFriendlist();
 
-    useEffect(()=>{
-        const fetch = async()=>{
-            const token = localStorage.getItem("token");
-            const res = await axios.post("http://localhost:8080/friendlist",{
-                token:token
-            });
-            const ans = res.data;
-            setValue(ans.user.friends);
-            console.log("friends:",ans.user.friends);
-        }
-        fetch();
-    },[]);
+    if(!value){
+        return <div>Loading...</div>
+    }
     return(<div>
         {value.map((x)=>(
             <div>

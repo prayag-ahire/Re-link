@@ -15,15 +15,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const http_1 = __importDefault(require("http"));
+const socket_io_1 = require("socket.io");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const client_1 = require("@prisma/client");
+const ws_1 = require("./util/ws");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 const port = 8080;
 const server = http_1.default.createServer(app);
-// const io = new Server(server);
+const io = new socket_io_1.Server(server, {
+    cors: {
+        origin: "http://localhost:5173"
+    }
+});
+(0, ws_1.socket)(io);
 const prismaClient = new client_1.PrismaClient();
 app.post("/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
@@ -91,6 +98,7 @@ app.post("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 id: uid
             },
             select: {
+                id: true,
                 name: true
             }
         });
@@ -134,10 +142,15 @@ app.post("/friendlist", (req, res) => __awaiter(void 0, void 0, void 0, function
             where: {
                 id: uid
             }, select: {
-                friends: true
+                friends: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         });
         res.json({ user });
+        console.log(user);
     }
     catch (error) {
         console.error(error);
@@ -169,9 +182,11 @@ app.post("/addfriend", (req, res) => __awaiter(void 0, void 0, void 0, function*
                 friends: {
                     connect: { id: uid }
                 }
+            }, select: {
+                name: true
             }
         });
-        res.json({ user1, user2 });
+        res.json({ user2 });
     }
     catch (error) {
         console.error(error);

@@ -12,7 +12,7 @@ export const Signup = ()=>{
             username:name,
             password:pass
         })
-
+        alert("signup succsesful")
         const token = res.data
         localStorage.setItem("token",token.token);
     }

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FriendList } from "./FriendList";
 import { Search } from "./Search"
-import { UserLogo } from "./userLogo";
+import { UserLogo } from "./UserLogo";
 export const Sidebar = ({onclick}:{onclick:React.MouseEventHandler<HTMLDivElement>})=>{
 
     const navigate = useNavigate();
@@ -18,5 +18,6 @@ export const Sidebar = ({onclick}:{onclick:React.MouseEventHandler<HTMLDivElemen
             </div>
             <div className="w-full"><Search onchange={(x)=>{handler(x.target.value)}}/></div>
             <FriendList/>
+           
     </div>)
 }

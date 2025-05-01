@@ -4,19 +4,33 @@ import { Input } from "./Input";
 import { Sidebar } from "./Sidebar";
 import { useState } from "react";
 import { ChatBord } from "./chatbord";
+import { io } from "socket.io-client";
+
+// import { useFriendlist } from "../hooks/useFriendlist";
+
 
 export const Dashbord = ()=>{
     const [isopen,setIsOpen] = useState<boolean>(false);
-    const [value,setValue] = useState<string | null>(null);
+    const [values,setValues] = useState<string | null>(null);
+    // const {setValue} = useFriendlist();
+
+   
+
+   
 
     const handler = async()=>{
-        if(value){
+        if(values){
+            console.log(values)
+            const token = localStorage.getItem("token");
             const res = await axios.post("http://localhost:8080/addfriend",{
-                fid:value
+                token:token,
+                fid:values
             })
-        }
-        
 
+            // const ans = res.data
+            alert("added succseful");
+            setIsOpen(false);
+        }
     }
     return(<div className="flex w-full h-screen">
         <div className="w-1/5 bg-slate-800  justify-center pt-3">
@@ -27,7 +41,7 @@ export const Dashbord = ()=>{
             <div className="fixed inset-0 z-40  bg-opacity-30 backdrop-blur-xs" />
             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
                   bg-gray-900 p-6 rounded-lg shadow-xl space-y-5 z-50 w-80 h-48 " >
-                    <Input type="text" placeholder="Enter Id" onchange={(x)=>{setValue(x.target.value)}}/>
+                    <Input type="text" placeholder="Enter Id" onchange={(x)=>{setValues(x.target.value)}}/>
                     <div className="flex justify-around">
                         <Button onclick={()=>{setIsOpen(false)}}>cancel</Button>
                         <Button onclick={handler}>add</Button>
