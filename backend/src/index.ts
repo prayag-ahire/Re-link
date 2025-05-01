@@ -84,7 +84,6 @@ app.post("/user",async(req,res)=>{
     const token = req.body;
     console.log(token);
     const tk = token.token+"";
-
     const id = jwt.verify(tk,"chat-app");
     const uid = (id as JwtPayload).id
       
@@ -123,6 +122,67 @@ app.post("/userupdate",async(req,res)=>{
             }
         })
 
+    }catch(error){
+        console.error(error);
+        res.status(500).send('server error');
+    }
+})
+
+app.post("/friendlist",async(req,res)=>{
+    const token = req.body;
+    console.log(token);
+    const tk = token.token+"";
+    const id = jwt.verify(tk,"chat-app");
+    const uid = (id as JwtPayload).id
+    try{
+        const user = await prismaClient.user.findFirst({
+            where:{
+                id:uid
+            },select:{
+                friends:{
+                    select:{
+                        name:true
+                    }
+                }
+            }
+        }) 
+        res.json({user});
+    }catch(error){
+        console.error(error);
+        res.status(500).send('server error');
+    }
+})
+
+app.post("/addfriend",async(req,res)=>{
+    const {token,fid} = req.body;
+    console.log(token);
+    const tk = token+"";
+    const id = jwt.verify(tk,"chat-app");
+    const uid = (id as JwtPayload).id
+
+    try{
+        const user1 = await prismaClient.user.update({
+            where:{
+                id:uid
+            },
+            data:{
+                friends:{
+                    connect:{id:Number(fid)}
+                }
+            }
+        })
+
+        const user2 = await prismaClient.user.update({
+            where:{
+                id:Number(fid)
+            },
+            data:{
+                friends:{
+                    connect:{id:uid}
+                }
+            }
+        })
+        res.json({user1,user2})
     }catch(error){
         console.error(error);
         res.status(500).send('server error');

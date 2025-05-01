@@ -123,6 +123,61 @@ app.post("/userupdate", (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).send('server error');
     }
 }));
+app.post("/friendlist", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.body;
+    console.log(token);
+    const tk = token.token + "";
+    const id = jsonwebtoken_1.default.verify(tk, "chat-app");
+    const uid = id.id;
+    try {
+        const user = yield prismaClient.user.findFirst({
+            where: {
+                id: uid
+            }, select: {
+                friends: true
+            }
+        });
+        res.json({ user });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('server error');
+    }
+}));
+app.post("/addfriend", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token, fid } = req.body;
+    console.log(token);
+    const tk = token + "";
+    const id = jsonwebtoken_1.default.verify(tk, "chat-app");
+    const uid = id.id;
+    try {
+        const user1 = yield prismaClient.user.update({
+            where: {
+                id: uid
+            },
+            data: {
+                friends: {
+                    connect: { id: Number(fid) }
+                }
+            }
+        });
+        const user2 = yield prismaClient.user.update({
+            where: {
+                id: Number(fid)
+            },
+            data: {
+                friends: {
+                    connect: { id: uid }
+                }
+            }
+        });
+        res.json({ user1, user2 });
+    }
+    catch (error) {
+        console.error(error);
+        res.status(500).send('server error');
+    }
+}));
 server.listen(port, () => {
     console.log(`server is running on port ${port}`);
 });

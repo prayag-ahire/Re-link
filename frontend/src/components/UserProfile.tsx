@@ -38,7 +38,7 @@ export const UserProfile = ()=>{
         <div className=" border-2 w-180 h-auto ">
             <div className="flex items-center">
                 <div className=" hover:cursor-pointer p-5"><UserLogo classname="w-50 h-50"/></div>
-                <div className="space-y-3">
+                <div className="space-y-3 rounded">
                         <Input type="text" placeholder={userData.user?.name} onchange={(x)=>{setName(x.target.value)}}/>
                         {/* <Input type="text" placeholder={"ahire"} onchange={(x)=>{}}/> */}
                 </div>
