@@ -4,20 +4,12 @@ import { Input } from "./Input";
 import { Sidebar } from "./Sidebar";
 import { useState } from "react";
 import { ChatBord } from "./chatbord";
-import { io } from "socket.io-client";
-
-// import { useFriendlist } from "../hooks/useFriendlist";
-
 
 export const Dashbord = ()=>{
     const [isopen,setIsOpen] = useState<boolean>(false);
     const [values,setValues] = useState<string | null>(null);
-    // const {setValue} = useFriendlist();
 
    
-
-   
-
     const handler = async()=>{
         if(values){
             console.log(values)
@@ -27,7 +19,6 @@ export const Dashbord = ()=>{
                 fid:values
             })
 
-            // const ans = res.data
             alert("added succseful");
             setIsOpen(false);
         }

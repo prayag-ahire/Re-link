@@ -8,6 +8,7 @@ export const useFriendlist = ()=>{
     // const {value,setValue} = useFriendContext();
 
     //instend i will use this
+
     const  {value,setValue} = useContext(FriendContext);
 
     useEffect(()=>{

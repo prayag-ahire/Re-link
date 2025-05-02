@@ -1,6 +1,7 @@
 import React, { createContext, useState } from "react"
 
 interface userType {
+    id:number
     name:string
 }
 

@@ -148,6 +148,7 @@ app.post("/friendlist",async(req,res)=>{
             },select:{
                 friends:{
                     select:{
+                        id:true,
                         name:true
                     }
                 }

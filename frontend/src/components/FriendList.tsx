@@ -1,18 +1,21 @@
 
 import { UserLogo } from "./UserLogo";
 import { useFriendlist } from "../hooks/useFriendlist";
+import { useContext } from "react";
+import { User2Context } from "./user2Context";
 
 export const FriendList = ()=>{
     
     const {value} = useFriendlist();
+    const {setValue} = useContext(User2Context);
 
     if(!value){
         return <div>Loading...</div>
     }
     return(<div>
         {value.map((x)=>(
-            <div>
-            <div className="flex space-x-5 items-center ">
+            <div onClick={()=>{setValue(x)}}>
+            <div className="flex pl-1 space-x-5 items-center ">
                 <div><UserLogo classname="w-14 h-14"/></div>
                 <div className="w-full space-y-1">
                     <div className="flex justify-between text-white items-center">

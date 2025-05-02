@@ -1,13 +1,15 @@
-import { useState } from "react"
+import {useState } from "react"
 import { Input } from "./Input"
 import { UserLogo } from "./UserLogo"
 import { Button } from "./Button";
 import axios from "axios";
 import { useProfile } from "../hooks/useProfile";
 
+
 export const UserProfile = ()=>{
     const [name,setName] = useState("");
     const {value} = useProfile();
+    
 
     const handler = async()=>{
         
@@ -19,7 +21,7 @@ export const UserProfile = ()=>{
         })
 
         const ans = res.data;
-        alert(ans);
+        alert("update :"+ans);
 
     }
 
@@ -31,7 +33,7 @@ export const UserProfile = ()=>{
             <div className="flex items-center">
                 <div className=" hover:cursor-pointer p-5"><UserLogo classname="w-50 h-50"/></div>
                 <div className="space-y-3 rounded">
-                        <Input value={value.name} type="text"  onchange={(x)=>{setName(x.target.value)}}/>
+                        <Input placeholder={value.name} type="text"  onchange={(x)=>{setName(x.target.value)}}/>
                         {/* <Input type="text" placeholder={"ahire"} onchange={(x)=>{}}/> */}
                 </div>
             </div>
