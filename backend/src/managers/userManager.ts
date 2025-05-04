@@ -23,7 +23,7 @@ export class userManager{
     createUser(id:number,socket:Socket){
         const user = new User(socket);
         this.users.set(id,user)
-        console.log(this.users);
+       
     }
 
     // give the user 
@@ -34,6 +34,7 @@ export class userManager{
     createRoom(Roomid:string,id1:number,id2:number){
         const user = this.getUser(id1);
         user?.createRoom(Roomid,id1,id2);
+
     }
 
     chat(Roomid:string,uid1:number,uid2:number,msg:string){
@@ -41,7 +42,7 @@ export class userManager{
         const room = user?.getRoom(Roomid);
         const s2 = this.getUser(uid2)?.socket;
         if(s2){
-            room?.Chat(msg,s2);
+            room?.Chat(msg,s2,uid1,uid2);
         }
     }
 

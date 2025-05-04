@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { FriendList } from "./FriendList";
+import { FriendList } from "../context/FriendList";
 import { Search } from "./Search"
 import { UserLogo } from "./UserLogo";
 export const Sidebar = ({onclick}:{onclick:React.MouseEventHandler<HTMLDivElement>})=>{

@@ -4,11 +4,19 @@ import { Input } from "./Input";
 import { Sidebar } from "./Sidebar";
 import { useState } from "react";
 import { ChatBord } from "./chatbord";
+import { useFriendlist } from "../hooks/useFriendlist";
 
 export const Dashbord = ()=>{
+    type msg = {
+        msg:string,
+        sid:number,
+        rid:number
+    }
     const [isopen,setIsOpen] = useState<boolean>(false);
     const [values,setValues] = useState<string | null>(null);
-
+    const {value} = useFriendlist();
+    const message = new Map<number,msg[]>();
+    value?.map((x)=>message.set(x.id,[]));
    
     const handler = async()=>{
         if(values){
@@ -40,7 +48,7 @@ export const Dashbord = ()=>{
                   </div>
                   </>)}
         <div className="w-4/5 bg-gray-700">
-        <ChatBord/>
+        <ChatBord v1={message}/>
         </div>
     </div>)
 }

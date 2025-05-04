@@ -25,8 +25,9 @@ export class Room{
         }
     }
 
-    Chat(msg:string,s2:Socket){
-        s2.send("message",msg);
+    Chat(msg:string,s2:Socket,uid1:number,uid2:number){
+        console.log(msg,uid1,uid2);
+        s2.send("message",msg,uid1,uid2);
     }
 
 

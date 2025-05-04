@@ -1,11 +1,12 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react"
-import { ProfileContext } from "../components/ProfileContext";
+import { useContext, useEffect } from "react"
+import { ProfileContext } from "../context/ProfileContext";
 
 export const useProfile = () => {
     const {value,setValue} = useContext(ProfileContext) 
 
     useEffect(()=>{
+        if(value) return
         const fetch = async()=>{
             const token = localStorage.getItem("token");
             
@@ -16,10 +17,9 @@ export const useProfile = () => {
             console.log("this is ",ans);
             setValue(ans.user);
         }
-        if(!value){
+        
             fetch();
-        }
-    },[])
+    },[value])
 
     return {value,setValue};
 } 

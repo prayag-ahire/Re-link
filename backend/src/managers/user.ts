@@ -14,8 +14,7 @@ export class User {
     createRoom(id:string,uid1:number,uid2:number){
        const room = new Room(uid1,uid2);
        this.rooms.set(id,room);
-       console.log("room created")
-       console.log("total room ",this.rooms)
+       
     }
 
     getRoom(id:string){

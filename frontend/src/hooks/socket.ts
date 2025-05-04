@@ -1,22 +1,29 @@
-import { Socket } from "socket.io-client";
-import { useProfile } from "./useProfile";
+// import { io, Socket } from "socket.io-client";
+// import { useProfile } from "./useProfile";
+//  const { value } = useProfile(); 
+ 
+// let socket: Socket | null = null;
 
-export const socketW = (socket:Socket)=>{
-    const {value} = useProfile();
-    if(value){
-        socket.on("connect",()=>{
-            console.log("client side :",socket.id);
-        })
-    
-        socket.emit("user",value.id);
-    
-        socket.emit("createRoom",`${value.id}-3`,value.id,2);
+// export const connectSocket = () =>{
 
-        socket.emit("chat",`${value.id}-3`,value.id,2,"hello")
+//     if(!socket){
+//         socket = io("http://localhost:8080")
+//     }
 
-        socket.on("message",(arg)=>{
-            console.log("got the message",arg);
-        })
-    }
-    
-}
+//     socket.on("connect", () => {
+//         console.log("Socket connected:", socket?.id);
+//         if (value?.id) {
+//             socket?.emit("user", value.id); 
+//         }
+
+//     return socket;
+// })
+// }
+
+
+// export const getSocket = ()=>{
+//     if(!socket){
+//         throw new Error("Socket not connected. call connectSocket first")
+//     }
+//     return socket
+// }

@@ -13,6 +13,7 @@ export const UserProfile = ()=>{
 
     const handler = async()=>{
         
+
         const token = localStorage.getItem("token");
 
         const res = await axios.post("http://localhost:8080/userupdate",{
@@ -21,6 +22,7 @@ export const UserProfile = ()=>{
         })
 
         const ans = res.data;
+        
         alert("update :"+ans);
 
     }

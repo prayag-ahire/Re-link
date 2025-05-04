@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { FriendContext } from "../components/FriendContext"
+import { FriendContext } from "../context/FriendContext"
 import axios from "axios";
 
 export const useFriendlist = ()=>{

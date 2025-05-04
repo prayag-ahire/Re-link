@@ -1,5 +1,5 @@
 
-import { UserLogo } from "./UserLogo";
+import { UserLogo } from "../components/UserLogo";
 import { useFriendlist } from "../hooks/useFriendlist";
 import { useContext } from "react";
 import { User2Context } from "./user2Context";
@@ -14,7 +14,7 @@ export const FriendList = ()=>{
     }
     return(<div>
         {value.map((x)=>(
-            <div onClick={()=>{setValue(x)}}>
+            <div key={x.id} onClick={()=>{setValue(x)}}>
             <div className="flex pl-1 space-x-5 items-center ">
                 <div><UserLogo classname="w-14 h-14"/></div>
                 <div className="w-full space-y-1">
