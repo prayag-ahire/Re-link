@@ -8,7 +8,7 @@ export const Login = ()=>{
     const [pass,setPass] = useState("");
 
     const handler = async()=>{
-        const res = await axios.post("http://localhost:8080/login",{
+        const res = await axios.post("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000/login",{
             username:name,
             password:pass
         })

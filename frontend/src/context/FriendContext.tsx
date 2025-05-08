@@ -7,11 +7,11 @@ interface userType {
 
 interface listContext {
     value: userType[] | null;
-    setValue : (value:userType[])=> void
+    setValues : (value:userType[])=> void
 }
 
 // creating context here
-export const FriendContext = createContext<listContext>({value:null,setValue:()=>{}});
+export const FriendContext = createContext<listContext>({value:null,setValues:()=>{}});
 
 
 
@@ -19,10 +19,10 @@ export const FriendContext = createContext<listContext>({value:null,setValue:()=
 // creating context provider
 export const FriendProvider = ({children}:{children:React.ReactNode})=>{
 
-    const [value,setValue] = useState<userType[] | null>(null);
+    const [value,setValues] = useState<userType[] | null>(null);
 
     return(
-        <FriendContext.Provider value={{value,setValue}}>
+        <FriendContext.Provider value={{value,setValues}}>
             {children}
         </FriendContext.Provider>
     )

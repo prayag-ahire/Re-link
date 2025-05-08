@@ -16,7 +16,7 @@ export const SocketProvider = ({children}:{children:ReactNode})=>{
     useEffect(()=>{
         if(!value || socket) return
 
-        const s = io("http://localhost:8080");
+        const s = io("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000");
         s.on("connect",()=>{
             if(value?.id){
                 console.log("connected and emit user");

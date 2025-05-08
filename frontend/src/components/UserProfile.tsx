@@ -16,7 +16,7 @@ export const UserProfile = ()=>{
 
         const token = localStorage.getItem("token");
 
-        const res = await axios.post("http://localhost:8080/userupdate",{
+        const res = await axios.post("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000/userupdate",{
             token:token,
             username:name            
         })
@@ -35,6 +35,7 @@ export const UserProfile = ()=>{
             <div className="flex items-center">
                 <div className=" hover:cursor-pointer p-5"><UserLogo classname="w-50 h-50"/></div>
                 <div className="space-y-3 rounded">
+                        <p className="text-2xl w-full bg-gray-900 placeholder:text-gray-400  p-2 text-white border-white">{value.id}</p>
                         <Input placeholder={value.name} type="text"  onchange={(x)=>{setName(x.target.value)}}/>
                         {/* <Input type="text" placeholder={"ahire"} onchange={(x)=>{}}/> */}
                 </div>

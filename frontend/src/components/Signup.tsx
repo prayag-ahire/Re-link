@@ -8,7 +8,7 @@ export const Signup = ()=>{
     const [pass,setPass] = useState("");
 
     const handler = async()=>{
-        const res = await axios.post("http://localhost:8080/signup",{
+        const res = await axios.post("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000/signup",{
             username:name,
             password:pass
         })

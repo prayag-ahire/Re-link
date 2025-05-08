@@ -9,17 +9,17 @@ export const useFriendlist = ()=>{
 
     //instend i will use this
 
-    const  {value,setValue} = useContext(FriendContext);
+    const  {value,setValues} = useContext(FriendContext);
 
     useEffect(()=>{
 
         const fetchData = async()=>{
             const token = localStorage.getItem("token");
-            const res = await axios.post("http://localhost:8080/friendlist",{
+            const res = await axios.post("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000/friendlist",{
                 token:token
             })
             const ans = res.data;
-            setValue(ans.user.friends);
+            setValues(ans.user.friends);
         };
         if(!value ){   
             console.log("fateching it agine") 
@@ -27,6 +27,6 @@ export const useFriendlist = ()=>{
         }
     },[])
 
-    return {value,setValue};
+    return {value,setValues};
 
 }

@@ -17,12 +17,13 @@ export const Dashbord = ()=>{
     const {value} = useFriendlist();
     const message = new Map<number,msg[]>();
     value?.map((x)=>message.set(x.id,[]));
+    console.log(message)
    
     const handler = async()=>{
         if(values){
             console.log(values)
             const token = localStorage.getItem("token");
-            const res = await axios.post("http://localhost:8080/addfriend",{
+            await axios.post("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000/addfriend",{
                 token:token,
                 fid:values
             })
@@ -42,8 +43,8 @@ export const Dashbord = ()=>{
                   bg-gray-900 p-6 rounded-lg shadow-xl space-y-5 z-50 w-80 h-48 " >
                     <Input type="text" placeholder="Enter Id" onchange={(x)=>{setValues(x.target.value)}}/>
                     <div className="flex justify-around">
-                        <Button onclick={()=>{setIsOpen(false)}}>cancel</Button>
-                        <Button onclick={handler}>add</Button>
+                        <Button classname="rounded-xl p-2" onclick={()=>{setIsOpen(false)}}>cancel</Button>
+                        <Button classname="rounded-xl p-2" onclick={handler}>add</Button>
                     </div>
                   </div>
                   </>)}

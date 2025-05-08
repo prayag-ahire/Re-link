@@ -1,6 +1,11 @@
 import { Server } from "socket.io";
 import { userManager } from "../managers/userManager";
-import { unwatchFile } from "fs";
+
+declare module "socket.io" {
+    interface Socket{
+        userId:number
+    }
+}
 
 export const socket = (io:Server)=>{
 
@@ -12,6 +17,12 @@ export const socket = (io:Server)=>{
         socket.on("user",(uid1)=>{
        
             userManger.createUser(uid1,socket);
+            socket.userId = uid1;
+        })
+
+        socket.on("disconnect",()=>{
+            userManger.removeUser(socket.userId);
+            console.log(`${socket.userId}`)
         })
         
         socket.on("createRoom",(Roomid,uid1,uid2)=>{

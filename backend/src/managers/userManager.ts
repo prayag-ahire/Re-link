@@ -26,6 +26,10 @@ export class userManager{
        
     }
 
+    removeUser(uid:number){
+        this.users.delete(uid);
+    }
+
     // give the user 
     private getUser(id:number){
         return this.users.get(id);

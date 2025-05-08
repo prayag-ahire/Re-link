@@ -1,13 +1,31 @@
 
 import { UserLogo } from "../components/UserLogo";
-import { useFriendlist } from "../hooks/useFriendlist";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { User2Context } from "./user2Context";
+import { FriendContext } from "./FriendContext";
+import axios from "axios";
 
 export const FriendList = ()=>{
     
-    const {value} = useFriendlist();
     const {setValue} = useContext(User2Context);
+    
+    const  {value} = useContext(FriendContext);
+
+    useEffect(()=>{
+
+        const fetchData = async()=>{
+            const token = localStorage.getItem("token");
+            const res = await axios.post("http://ec2-184-72-139-174.compute-1.amazonaws.com:3000/friendlist",{
+                token:token
+            })
+            const ans = res.data;
+            setValue(ans.user.friends);
+        };
+        if(!value ){   
+            console.log("fateching it agine") 
+            fetchData();
+        }
+    },[])
 
     if(!value){
         return <div>Loading...</div>
